@@ -1,0 +1,27 @@
+# https://raw.githubusercontent.com/aws-ia/terraform-aws-eks-blueprints/f8f3d41e57c42137209dea96a25966ecd2efb99a/patterns/karpenter/example.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: inflate
+  namespace: default
+spec:
+  replicas: 0
+  selector:
+    matchLabels:
+      app: inflate
+  template:
+    metadata:
+      labels:
+        app: inflate
+    spec:
+      terminationGracePeriodSeconds: 0
+      containers:
+        - name: inflate
+          image: public.ecr.aws/eks-distro/kubernetes/pause:3.10
+          resources:
+            requests:
+              cpu: 2
+              memory: "128Mi"
+            limits:
+              cpu: 4
+              memory: "256Mi"
